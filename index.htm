@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href="jqueryui1.8/development-bundle/themes/base/jquery.ui.core.css">
+		<link rel="stylesheet" type="text/css" href="jqueryui1.8/development-bundle/themes/base/jquery.ui.theme.css">
+		<link rel="stylesheet" type="text/css" href="jqueryui1.8/development-bundle/themes/base/jquery.ui.progressbar.css">
+		<link rel="stylesheet" type="text/css" href="custom.css">
+		<link href="css/smoothness/jquery-ui-1.9.0.custom.css" rel="stylesheet">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+	<script src="js/jquery-1.8.2.js"></script>
+	<script src="js/jquery-ui-1.9.0.custom.js"></script>
+		<!--[if IE 9]>
+			 <style type="text/css">
+				.form-panel .input, .form-panel input, .form-panel textarea {
+					border-radius: 0;
+				}
+			 </style>
+		<![endif]-->
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		
+		<title>Delux Wash</title>
+		
+		  <!-- start cufon fonts -->
+		<script src="cufon-yui.js" type="text/javascript"></script>
+		<script src="Myriad_Pro_400.font.js" type="text/javascript"></script>
+		<script type="text/javascript">
+			Cufon.replace('h3'); // Works without a selector engine
+			Cufon.replace('#sub1'); // Requires a selector engine for IE 6-7, see above
+			Cufon.replace('.title'); // Requires a selector engine for IE 6-7, see above
+		</script>
+<!-- end cufon fonts -->
+
+
+
+<style>
+		.title{
+		font-size:20px;
+		color:#5a7ba6;
+		font-weight:bold;
+		}
+		.menu1{
+		float:left;
+		width:auto;
+		background:#5a7ba6;
+		font-family:Arial, Helvetica, sans-serif;
+		font-size:12px;
+		color:#FFFFFF;
+		width:98%;
+		margin-top:3%;
+		padding:1%;
+		padding-top:3%;
+		padding-bottom:3%;
+		border-radius:5px;
+		-moz-border-radius:5px;
+		}
+		.menu1 a:link{
+		color:#FFFFFF;
+		text-decoration:none;
+		}
+		.menu1 a:hover{
+		color:#FFFFFF;
+		text-decoration:none;
+		}
+		.menu1 a:active{
+		color:#FFFFFF;
+		text-decoration:none;
+		}
+		.menu1 a:visited{
+		color:#FFFFFF;
+		text-decoration:none;
+		}
+</style>
+
+	</head>
+	<body  style="background:url(car.jpg)no-repeat center center fixed; -webkit-background-size: cover;-moz-background-size: cover;-o-background-size: cover;background-size: cover;">
+		<div class="ex-form ui-helper-clearfix ui-corner-all" style=" width:100%; float:left;margin-top:30px; height:auto;">
+			<h1 style="width:100%;"><img src="logo.png"></h1>
+			<div id="progress" style="width:98%; margin:auto;"></div><label id="amount">0%</label>
+			<form action="insert1.php" method="post">
+				<div id="panel1" class="form-panel" style="height:auto;">
+				  <h2>Personal Details</h2>
+					<fieldset class="ui-corner-all" style="width:100%; height:auto; float:left;">
+						<label style="display:none;">
+							<span class="title">Subject Id:</span>
+						</label>
+						<label style="display:none;">
+							<span class="input"><input type="text" id="sub_id" name="sub_id" readonly=""  /></span>
+						</label>
+						<label>
+							<span class="title">Contact No:</span>
+						</label>
+						<label>
+							<span class="input"><input type="text" name="contact" id="contact" class="textbox" /></span>
+						</label>
+						<label>
+							<span class="title">Customer Name:</span>
+						</label>
+						<label>
+							<span class="input"><input type="text" name="customer_name" id="customer_name" /></span>
+						</label>
+						<label>
+							<span class="title">Email Id:</span>
+						</label>
+						<label>
+							<span class="input"><input type="text" name="email" id="email" class="textbox" /></span>
+						</label>
+						
+						
+						
+						
+						<label style="width:100%; height:50px; float:left;">
+							<span class="title">Vehicle No:</span>
+						</label>
+						<label>
+							<span class="input"><input type="text" name="vehicle_no" class="textbox" id="vehicle_no" /></span>
+						</label>
+						<label>
+							<span class="title">Type Of Vehicles :</span>
+						</label>
+						<label>
+							<span class="input">
+							<select name="vehicle_type" id="vehicle_type" onChange="return modelno();" style="width:100%; height:35px; border-radius:10px; -moz-border-radius:10px; border:none; " >
+							
+							<option value="">Select</option>
+						
+								<option </option>
+													
+							</select>
+							</span>
+						</label>
+						<label style="width:100%; float:left; margin-bottom:10px;">
+							<span class="title">Loyalty Points </span> 
+						</label>
+						<label>
+							<span class="input" id="visits">  </span>
+						</label>
+						<label style="width:100%; float:left; margin-bottom:10px;">	
+							<span class="title">Free Services Used</span> 
+						</label>
+						<label>
+							<span class="input" id="freeservices">  </span>
+						</label>
+						<label style="width:100%; float:left;">
+							<span class="title">After Last free service</span> 
+						</label>
+						<label>
+							<span class="input" id="latestfreeservices">  </span>
+						</label>
+					</fieldset>
+				</div>
+				<div id="panel2" class="form-panel ui-helper-hidden" style="width:100%; height:auto; min-height:1000px; float:left;">
+				  <h2>Model/Service Details</h2>
+					<fieldset class="ui-corner-all" style="height:auto;">
+						<label style="width:100%; height:50px; float:left;">
+							<span class="title">Model Name:</span>
+						</label>
+						<label>
+							<span id="modelname" class="input"><select name="modelname" id="modelnames" style="float:left; width:100%; height:35px;">
+							<option value="">Select</option>
+							</select></span>
+						</label>
+						
+						<div class="label">
+							<label class="title" for="text">Services Available 	:</label>
+							<div class="input textarea"  id="services" style="background:none;">
+								<textarea rows="3" cols="25" name="text" id="text"></textarea>
+							</div>
+						</div>
+					</fieldset>
+				</div>
+				<div id="panel3" class="form-panel ui-helper-hidden" style=" width:100%;height:auto; float:left;">
+				  <h2>Allocated Team Details</h2>
+					<fieldset class="ui-corner-all" style="height:auto;">
+						<label style="width:100%; height:50px; float:left;">
+							<span class="title">Team Name:</span>
+						</label>
+						<label>
+							<span class="input"><select name="teamname" id="teamname" onChange="return emplist();" style="width:100%; height:35px; border-radius:10px; -moz-border-radius:10px; border:none; " >
+							<option value="">Select</option>
+				
+					<option ></option>
+					</select></span>
+						</label>
+						<label style="width:100%; min-height:50px; height:auto; margin-bottom:10px; float:left;">
+							<span class="title">Team Members:<input type="text" name="val" id="val" style="display:none;" class="textbox"  /></span>
+						</label>
+						<label>
+							<span class="input" id="teammember" style="background:none;"> &nbsp; </span>
+						</label>
+						<label>
+							<span class="title">Payment Type:</span>
+						</label>
+						<label>
+							<span class="input"><select name="payment_type" class="textbox" id="pay" onBlur="copyto();" style="width:100%; height:40px; border-radius:10px; -moz-border-radius:10px; border:none; ">
+							<option value="">Select</option>
+							<option value="cash">Cash</option>
+							<option value="credit">Credit</option>
+							
+							</select></span>
+						</label>
+						
+					</fieldset>
+				</div>
+				<div id="thanks" class="form-panel ui-helper-hidden" style=" width:100%;height:auto; float:left;">
+				  <h2>Registration Complete</h2>
+					<fieldset class="ui-corner-all" style="margin-top:0%;">
+					<p id="conformtotal" style="margin-top:0%;">Are you sure to submit the</p>
+                                        <p id="conformtotalprice" style="background:#ff0000; font-size:28px; color:#ffffff;">PRICE</p>
+					<span style="float:left; width:100%;"><input type="submit" name="submit" value="Confirm"  style="width:80px; height:30px; padding-top:5px; font-size:14px; font-weight:bold; font-family:Arial, Helvetica, sans-serif; color:#ffffff; background: -moz-linear-gradient( left, #98c8a9, #e9e1a8 );
+			background: -webkit-linear-gradient( left, #98c8a9, #e9e1a8 );
+			background: -o-linear-gradient( left, #98c8a9, #e9e1a8 );
+			background: -khtml-linear-gradient( left, #98c8a9, #e9e1a8 );
+			background: linear-gradient( to right, #98c8a9, #e9e1a8 );"></span>
+					</fieldset>
+				</div>
+				<button id="next" style="margin-top:17%;">Next <span>&#9654;</span></button><button id="back" disabled="disabled" style="margin-top:17%;"><span>&#9664;</span> Back</button>
+			</form>
+		</div>
+		<script type="text/javascript" src="jqueryui1.8/development-bundle/jquery-1.7.2.js"></script>
+		<script type="text/javascript" src="jqueryui1.8/development-bundle/ui/jquery.ui.core.js"></script>
+		<script type="text/javascript" src="jqueryui1.8/development-bundle/ui/jquery-ui-1.8.20.custom.js"></script>
+		<script type="text/javascript">
+			$(function() {
+				//caching stuff
+				$progress = $("#progress"), $amount = $("#amount"), panels = [], panels[0] = "panel1", panels[1] = "panel2", panels[3] = "thanks", i = 0, $formPanel = $(".form-panel");
+				//call progress bar constructor
+				$progress.progressbar({
+					change: function() {
+						//update amount label when value changes
+						$amount.text($progress.progressbar("option", "value") + "%");
+					}
+				});
+				//same function to reuse code
+				function changepanel(n) {
+					//hide current item
+					$($formPanel[i]).fadeOut(500);
+					//selects next item
+					i = i + n;
+					//hide next item
+					$($formPanel[i]).delay(505).fadeIn();
+					
+					(i != 0) ? $("#back").attr("disabled", null) : $("#back").attr("disabled", "disabled");
+					(i != 3) ? $("#next").attr("disabled", null) : $("#next").attr("disabled", "disabled");
+	                                if(i ==2 ) {
+                                         n = $("input:checked").length ;
+                                         $('#conformtotalprice').html('hello'+n);
+total=0;
+$("input:checkbox.pricetot:checked").each(function() {
+        total += parseInt($(this).attr('price'));
+    });
+
+ $('#conformtotalprice').html('Total Price-'+total);
+                                          }
+        			
+					$progress.progressbar("option", "value",Math.round(i * 33.33) );					
+				}
+				//set click handler for buttons
+				$(".ex-form button").click(function(e) {
+//alert(i);
+var n = ($(this).attr("id") != "back") ? 1 : -1;
+				e.preventDefault();
+					
+					//next or back?
+					
+
+					changepanel(n);
+
+				});	
+				
+			
+			});
+		</script>
+	</body>
+</html>
