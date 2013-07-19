@@ -167,7 +167,7 @@ document.getElementById(x).checked=false;
     }
 
     function successCB() {
-        alert("success!");
+        //alert("success!");
     }
     Ready();
     function queryDB(tx) {
@@ -176,9 +176,9 @@ document.getElementById(x).checked=false;
 
     function querySuccess(tx, results) {
         var len = results.rows.length;
-        alert("CONTACT table: " + len + " rows found.");
+        //alert("CONTACT table: " + len + " rows found.");
         for (var i=0; i<len; i++){
-		alert(results.rows.item(i).contactno);
+		//alert(results.rows.item(i).contactno);
             availableTags.push(results.rows.item(i).contactno);
         }
     }
