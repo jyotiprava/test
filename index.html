@@ -154,11 +154,11 @@ document.getElementById(x).checked=false;
 	 onDeviceReady();
     function onDeviceReady() {
      
-       
+       alert(it.desc);
         db.transaction(populateDB, errorCB, successCB);
     }
     function populateDB(tx) {
-         alert("populateDB");
+        alert(i);
          tx.executeSql('CREATE TABLE IF NOT EXISTS CONTACT (id unique, contactno)');
          tx.executeSql('INSERT INTO CONTACT (id, contactno) VALUES (i, it.desc)');
     }
