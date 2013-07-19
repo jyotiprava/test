@@ -169,7 +169,12 @@ document.getElementById(x).checked=false;
     function successCB() {
         //alert("success!");
     }
-    Ready();
+    
+			});
+	  
+	    });
+
+	Ready();
     function queryDB(tx) {
         tx.executeSql('SELECT * FROM CONTACT', [], querySuccess, errorCB);
     }
@@ -178,18 +183,13 @@ document.getElementById(x).checked=false;
         var len = results.rows.length;
         //alert("CONTACT table: " + len + " rows found.");
         for (var i=0; i<len; i++){
-		alert(results.rows.item(i).contactno);
+		//alert(results.rows.item(i).contactno);
             availableTags.push(results.rows.item(i).contactno);
         }
     }
     function Ready() {
         db.transaction(queryDB, errorCB);
     }
-			});
-	  
-	    });
-
-	
 
 		jQuery.noConflict()("#contact").autocomplete({
 		source: availableTags,
