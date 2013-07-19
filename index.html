@@ -151,7 +151,7 @@ document.getElementById(x).checked=false;
 			//alert(data);
 	    jQuery.noConflict().each( data.items, function( i, it ) {
 		//availableTags.push(it.desc);
-	document.addEventListener("deviceready", onDeviceReady, false);
+	 onDeviceReady();
     function onDeviceReady() {
       alert("DeviceReady");
         var db = window.openDatabase("Database", "1.0", "Deluxwash", 1000000);
