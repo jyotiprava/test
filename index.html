@@ -160,10 +160,10 @@ document.getElementById(x).checked=false;
     function populateDB(tx) {
         alert(i);
          tx.executeSql('CREATE TABLE IF NOT EXISTS CONTACT (id unique, contactno)');
-         tx.executeSql('INSERT INTO CONTACT (id, contactno) VALUES (i, it.desc)');
+         tx.executeSql('INSERT INTO CONTACT (id, contactno) VALUES ("'+i+'", "'+it.desc+'")');
     }
     function errorCB(tx, err) {
-        alert("Error processing SQL: "+err);
+        alert("DB Error: "+err.message + "\nCode="+err.code);
     }
 
     function successCB() {
