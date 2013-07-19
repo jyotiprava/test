@@ -139,7 +139,7 @@ document.getElementById(x).checked=false;
 <script type="application/javascript">
 	 jQuery.noConflict()(function(){
 	var availableTags= new Array();
-	
+	 var db = window.openDatabase("Database", "1.0", "Deluxwash", 1000000);
 	  var flickerAPI ="http://166.78.237.203/mobiledeluxnew/mobiledelux/carwash/phpfiles/fetch_contactno.php?jsoncallback=?";
 	  jQuery.noConflict().getJSON( flickerAPI, {
 	    tags: "mount rainier",
@@ -153,8 +153,8 @@ document.getElementById(x).checked=false;
 		//availableTags.push(it.desc);
 	 onDeviceReady();
     function onDeviceReady() {
-      alert("DeviceReady");
-        var db = window.openDatabase("Database", "1.0", "Deluxwash", 1000000);
+     
+       
         db.transaction(populateDB, errorCB, successCB);
     }
     function populateDB(tx) {
