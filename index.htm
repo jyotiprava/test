@@ -5,12 +5,13 @@
 		<link rel="stylesheet" type="text/css" href="jqueryui1.8/development-bundle/themes/base/jquery.ui.theme.css">
 		<link rel="stylesheet" type="text/css" href="jqueryui1.8/development-bundle/themes/base/jquery.ui.progressbar.css">
 		<link rel="stylesheet" type="text/css" href="custom.css">
+			<script src="jquery-1.9.1.js"></script>
+			<script type="text/javascript" charset="utf-8" src="cordova.js"></script>
 		<link href="css/smoothness/jquery-ui-1.9.0.custom.css" rel="stylesheet">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 		<meta name="apple-mobile-web-app-capable" content="yes" />
 		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-	<script src="js/jquery-1.8.2.js"></script>
-	<script src="js/jquery-ui-1.9.0.custom.js"></script>
+		<script type="text/javascript" charset="utf-8" src="cordova.js"></script>
 		<!--[if IE 9]>
 			 <style type="text/css">
 				.form-panel .input, .form-panel input, .form-panel textarea {
@@ -71,14 +72,324 @@
 		color:#FFFFFF;
 		text-decoration:none;
 		}
+		.blue{
+			height:35px; padding-top:2px; font-size:18px; margin-top:5px; background: -moz-linear-gradient( top, #98c8a9, #e9e1a8 );background: -webkit-linear-gradient( top, #98c8a9, #e9e1a8 );background: -o-linear-gradient( top, #98c8a9, #e9e1a8 );background: -khtml-linear-gradient( top, #98c8a9, #e9e1a8 );background: linear-gradient( to bottom, #98c8a9, #e9e1a8 ); border-radius:5px; -moz-border-radius:5px; background:#0099cc;
+		}
 </style>
+<script>
+function check(x)
+{
+if(!document.getElementById(x).checked)
+{
 
+document.getElementById(x).checked=true;
+}
+else
+{
+document.getElementById(x).checked=false;
+}
+
+}
+
+function check1(x)
+{
+if(!document.getElementById(x).checked)
+{
+
+document.getElementById(x).checked=true;
+}
+else
+{
+document.getElementById(x).checked=false;
+}
+
+}
+
+</script>
+
+<script type="application/javascript">
+	jQuery.noConflict()(function(){
+		 var param1 = (new Date()).getTime() / 1000;
+		      var intvalue = Math.round( param1 );
+		jQuery.noConflict()('#sub_id').val(intvalue);
+		var server =location.hostname;
+		var request_uri = location.pathname + location.search;
+		var url=server + request_uri;
+		jQuery.noConflict()('#pageurl').val(url);
+	  var flickerAPI ="http://166.78.237.203/mobiledeluxnew/mobiledelux/carwash/phpfiles/fetch_vehtype.php?jsoncallback=?";
+	  jQuery.noConflict().getJSON( flickerAPI, {
+	    tags: "mount rainier",
+	    tagmode: "any",
+	    format: "json"
+	  })
+	  .done(function( data ) {
+			//alert(data);
+	    jQuery.noConflict().each( data.items, function( i, it ) {
+			//alert(it.desc);
+		 jQuery.noConflict()('#vehicle_type').append(jQuery.noConflict()('<option>').text(it.desc).attr('value', it.desc));
+			});
+	  
+	    });
+
+	 });
+</script>
+
+
+	  <script src="jquery-ui.js"></script>
+<script type="application/javascript">
+	 jQuery.noConflict()(function(){
+	var availableTags= new Array();
+	
+	  var flickerAPI ="http://166.78.237.203/mobiledeluxnew/mobiledelux/carwash/phpfiles/fetch_contactno.php?jsoncallback=?";
+	  jQuery.noConflict().getJSON( flickerAPI, {
+	    tags: "mount rainier",
+	    tagmode: "any",
+	     format: "json",
+	    async:true,	    
+	  })
+	  .done(function( data ) {
+			//alert(data);
+	    jQuery.noConflict().each( data.items, function( i, it ) {
+		//availableTags.push(it.desc);
+	document.addEventListener("deviceready", onDeviceReady, false);
+    function onDeviceReady() {
+      alert("DeviceReady");
+        var db = window.openDatabase("Database", "1.0", "Deluxwash", 1000000);
+        db.transaction(populateDB, errorCB, successCB);
+    }
+    function populateDB(tx) {
+         alert("populateDB");
+         tx.executeSql('CREATE TABLE IF NOT EXISTS CONTACT (id unique, contactno)');
+         tx.executeSql('INSERT INTO CONTACT (id, contactno) VALUES (i, it.desc)');
+    }
+    function errorCB(tx, err) {
+        alert("Error processing SQL: "+err);
+    }
+
+    function successCB() {
+        alert("success!");
+    }
+			});
+	  
+	    });
+
+	
+
+		jQuery.noConflict()("#contact").autocomplete({
+		source: availableTags,
+		select : function(event,ui){change=ui.item.value;
+			var flickerAPI = "http://166.78.237.203/mobiledeluxnew/mobiledelux/carwash/phpfiles/fetch_all.php?jsoncallback=?&contact="+change;
+  jQuery.getJSON( flickerAPI, {
+    tags: "mount rainier",
+    tagmode: "any",
+    format: "json"
+  })
+  .done(function( data ) {
+	
+      jQuery.each( data.items, function( i, it ) {
+	  jQuery.noConflict()('#customer_name').val(it.customername);
+	  jQuery.noConflict()('#email').val(it.email);
+	  jQuery.noConflict()('#visits').val(it.loyality);
+	 jQuery.noConflict()('#freeservices').val(it.freeservice);
+	  jQuery.noConflict()('#latestfreeservices').val(it.latestfree);
+	  jQuery.noConflict()('#qrcode').val(it.qrcode);
+	jQuery.noConflict()('#vehicle_type option[value="'+it.vehicle+'"]').remove();
+    
+    jQuery.noConflict()('#vehicle_type').append(jQuery.noConflict()('<option>').text(it.vehicle).attr('value', it.vehicle));
+    if(((it.loyality%8)==0) && (it.loyality>0)){
+jQuery.noConflict()("#pay").html($("<option>",{	value: 'free',	text: 'free'}));}
+else
+jQuery.noConflict()("select#pay").find("[value='free']").remove();
+    
+    });
+	
+  }); 
+		}
+		});
+		});
+	  
+</script>
+<script type="application/javascript">
+	jQuery.noConflict()(function(){
+	var loc=localStorage.loc;
+	  var flickerAPI ="http://166.78.237.203/mobiledeluxnew/mobiledelux/carwash/phpfiles/fetch_vehno.php?jsoncallback=?";
+	  jQuery.noConflict().getJSON( flickerAPI, {
+	    tags: "mount rainier",
+	    locat:loc,
+	    tagmode: "any",
+	    format: "json"
+	  })
+	  .done(function( data ) {
+	    jQuery.noConflict().each( data.items, function( i, it ) {
+		 	  jQuery.noConflict()('#vehicle_no').val(it.vehno);
+			});
+	  
+	    });
+
+	 });
+</script>
+<script type="application/javascript">
+	var servicedetails='';
+	function model(){
+		var loc=localStorage.loc;
+	var type=jQuery.noConflict()('#vehicle_type').val();	
+	  var flickerAPI ="http://166.78.237.203/mobiledeluxnew/mobiledelux/carwash/phpfiles/fetch_model.php?jsoncallback=?&vetype="+type;
+	  jQuery.noConflict().getJSON( flickerAPI, {
+	    tags: "mount rainier",
+	    locat:loc,
+	    tagmode: "any",
+	    format: "json"
+	  })
+	  .done(function( data ) {
+			//alert(data);
+	    jQuery.noConflict().each( data.items, function( i, it ) {
+
+		 jQuery.noConflict()('#modelnames').append(jQuery.noConflict()('<option>').text(it.model).attr('value', it.model));
+			});
+	  jQuery.noConflict().each( data.item, function( i, it1 ) {
+		servicedetails=servicedetails+it1.desc;
+		
+			});
+	  jQuery.noConflict()('#services').html(servicedetails);
+	    });
+
+	 }
+</script>
+<script type="application/javascript">
+	jQuery.noConflict()(function(){
+		var loc=localStorage.loc;	
+	  var flickerAPI ="http://166.78.237.203/mobiledeluxnew/mobiledelux/carwash/phpfiles/fetch_teamname.php?jsoncallback=?";
+	  jQuery.noConflict().getJSON( flickerAPI, {
+	    tags: "mount rainier",
+	    locat:loc,
+	    tagmode: "any",
+	    format: "json"
+	  })
+	  .done(function( data ) {
+			//alert(data);
+	    jQuery.noConflict().each( data.items, function( i, it ) {
+			jQuery.noConflict()('#teamname').append(jQuery.noConflict()('<option>').text(it.desc).attr('value', it.id));
+			});
+	  
+	    });
+	 });
+</script>
+<script type="application/javascript">
+	var team='';
+	var val="";
+	function emplist(){
+	var team=jQuery.noConflict()('#teamname').val();
+	var loc=localStorage.loc;	
+	  var flickerAPI ="http://166.78.237.203/mobiledeluxnew/mobiledelux/carwash/phpfiles/fetch_teammember.php?jsoncallback=?&teamname="+team;
+	  jQuery.noConflict().getJSON( flickerAPI, {
+	    tags: "mount rainier",
+	    tagmode: "any",
+	    locat:loc,
+	    format: "json"
+	  })
+	  .done(function( data ) {
+			//alert(data);
+	    jQuery.noConflict().each( data.items, function( i, it ) {
+		team=team+it.desc;
+			});
+	    jQuery.noConflict()('#teammember').html(team);
+	    });
+	 }
+</script>
+<script type="application/javascript">
+	 function copyto() {
+		var nam=jQuery.noConflict()('#customer_name').val();
+		var subid=jQuery.noConflict()('#sub_id').val();
+		var cont=jQuery.noConflict()('#contact').val();
+		var veht=jQuery.noConflict()('#vehicle_type').val();
+		var pay=jQuery.noConflict()('#pay').val();
+if(pay=="free")
+{
+var a='name:'+nam+'<br>service no:'+subid+'<br>contanct no:'+cont+'<br>vehicle type:'+veht+'<br>payment mode:'+pay+'<br>This is your free service';
+jQuery.noConflict()('#conformtotal').html(a);
+}
+else
+{
+var a='name:'+nam+'<br>service no:'+subid+'<br>contanct no:'+cont+'<br>vehicle type:'+veht+'<br>payment mode:'+pay;
+jQuery.noConflict()('#conformtotal').html(a);
+}
+}
+
+
+function enterdata() {
+		var val="";
+		var val1=new Array();
+		var val2=new Array();
+		var loc=localStorage.loc;
+jQuery.noConflict()("#change").find(".textbox").each(function(){
+
+val=val+'&'+jQuery.noConflict()(this).attr('id')+'='+jQuery.noConflict()(this).val();
+
+});
+jQuery.noConflict()(".pricetot").each(function(){
+if(jQuery.noConflict()(this).is(':checked'))
+ val1.push(jQuery.noConflict()(this).val());
+});
+jQuery.noConflict()(".employee").each(function(){
+if(jQuery.noConflict()(this).is(':checked'))
+val2.push(jQuery.noConflict()(this).val());
+});
+  var flickerAPI = "http://166.78.237.203/mobiledeluxnew/mobiledelux/carwash/phpfiles/insert.php?jsoncallback=?"+val;
+  jQuery.getJSON( flickerAPI, {
+    tags: "mount rainier",
+    tagmode: "any",
+    locat: loc,
+    employee: val2,
+    service: val1,
+    format: "json"
+  })
+  .done(function( data ) {
+  
+     var statusval=data.items;
+	 if(statusval==1)
+	 {
+	 alert("Insert succesfuly");
+	 window.location.href="index.htm";
+	 }
+	 else
+         {
+            alert("Enter Form Properly");
+	    window.location.href="index.htm";
+         }
+  });
+
+}
+</script>
 	</head>
-	<body  style="background:url(car.jpg)no-repeat center center fixed; -webkit-background-size: cover;-moz-background-size: cover;-o-background-size: cover;background-size: cover;">
+	<body  style="background:url(car.jpg) no-repeat center center fixed; -webkit-background-size: cover; -moz-background-size: cover;-o-background-size: cover;background-size: cover;">
+		<div style="width:98%; height:auto; float:left; margin-left:1%; margin-top:2%;  font-size:12px; text-align:center;">
+			
+			 <div class="menu1">
+				<a href="deleteemp.php"> Edit Team </a>
+			</div>
+			<div class="menu1">
+				<a href="carcount.php">Car Count Report</a>
+			</div>
+			<div class="menu1">
+				<a href="editservice.php">Edit Entry</a>
+			</div>
+			<div class="menu1">
+				<a href="qrcode_generate.php">QR Management</a>
+			</div>
+			<div class="menu1">
+				<a href="view_null_qrcode.php">Assign QR Code</a>
+			</div>
+			<div class="menu1">
+				<a href="existing_qrcode.php">Change QR Code</a>
+			</div>
+			<div class="menu1">
+				<a href="logout.htm"> Logout </a>
+			</div>
+		</div>
 		<div class="ex-form ui-helper-clearfix ui-corner-all" style=" width:100%; float:left;margin-top:30px; height:auto;">
 			<h1 style="width:100%;"><img src="logo.png"></h1>
 			<div id="progress" style="width:98%; margin:auto;"></div><label id="amount">0%</label>
-			<form action="insert1.php" method="post">
+			<form id="change">
 				<div id="panel1" class="form-panel" style="height:auto;">
 				  <h2>Personal Details</h2>
 					<fieldset class="ui-corner-all" style="width:100%; height:auto; float:left;">
@@ -86,19 +397,23 @@
 							<span class="title">Subject Id:</span>
 						</label>
 						<label style="display:none;">
-							<span class="input"><input type="text" id="sub_id" name="sub_id" readonly=""  /></span>
+							<span class="input"><input type="text" id="sub_id" class="textbox" name="sub_id" readonly=""  /></span>
 						</label>
 						<label>
-							<span class="title">Contact No:</span>
+							<span class="title">Contact No:<input type="hidden" name="pageurl" class="textbox" id="pageurl" /></span>
 						</label>
 						<label>
-							<span class="input"><input type="text" name="contact" id="contact" class="textbox" /></span>
+							<span class="input">
+								<input list="contactno"  name="contact" id="contact" class="textbox" />
+								<datalist id="contactno">
+								</datalist>
+							</span>
 						</label>
 						<label>
 							<span class="title">Customer Name:</span>
 						</label>
 						<label>
-							<span class="input"><input type="text" name="customer_name" id="customer_name" /></span>
+							<span class="input"><input type="text" name="customer_name" id="customer_name" class="textbox" /></span>
 						</label>
 						<label>
 							<span class="title">Email Id:</span>
@@ -107,7 +422,10 @@
 							<span class="input"><input type="text" name="email" id="email" class="textbox" /></span>
 						</label>
 						
-						
+						<label>
+							<span class="title">Assign QRcode:</span>
+							<span class="input"><input type="text" name="qrcode" id="qrcode"  class="textbox"  /></span>
+						</label>
 						
 						
 						<label style="width:100%; height:50px; float:left;">
@@ -121,12 +439,8 @@
 						</label>
 						<label>
 							<span class="input">
-							<select name="vehicle_type" id="vehicle_type" onChange="return modelno();" style="width:100%; height:35px; border-radius:10px; -moz-border-radius:10px; border:none; " >
-							
-							<option value="">Select</option>
-						
-								<option </option>
-													
+							<select name="vehicle_type" id="vehicle_type" class="textbox" style="width:100%; height:35px; border-radius:10px; -moz-border-radius:10px; border:none; " onchange="return model();">
+								<option>--select--</option>
 							</select>
 							</span>
 						</label>
@@ -134,19 +448,19 @@
 							<span class="title">Loyalty Points </span> 
 						</label>
 						<label>
-							<span class="input" id="visits">  </span>
+							<span class="input"><input type="text" style="border: none; background: none;" id="visits"/> </span>
 						</label>
 						<label style="width:100%; float:left; margin-bottom:10px;">	
 							<span class="title">Free Services Used</span> 
 						</label>
 						<label>
-							<span class="input" id="freeservices">  </span>
+							<span class="input"> <input type="text" style="border: none; background: none;" id="freeservices"/>  </span>
 						</label>
 						<label style="width:100%; float:left;">
 							<span class="title">After Last free service</span> 
 						</label>
 						<label>
-							<span class="input" id="latestfreeservices">  </span>
+							<span class="input"><input type="text" style="border: none; background: none;" id="latestfreeservices"/>   </span>
 						</label>
 					</fieldset>
 				</div>
@@ -157,15 +471,16 @@
 							<span class="title">Model Name:</span>
 						</label>
 						<label>
-							<span id="modelname" class="input"><select name="modelname" id="modelnames" style="float:left; width:100%; height:35px;">
-							<option value="">Select</option>
-							</select></span>
+							<span id="modelname" class="input">
+							<select name="modelname" id="modelnames" class="textbox" style="float:left; width:100%; height:35px;">
+							<option>--Select--</option>
+							</select>
+							</span>
 						</label>
 						
 						<div class="label">
-							<label class="title" for="text">Services Available 	:</label>
+							<label class="title" for="text">Services Available :</label>
 							<div class="input textarea"  id="services" style="background:none;">
-								<textarea rows="3" cols="25" name="text" id="text"></textarea>
 							</div>
 						</div>
 					</fieldset>
@@ -177,11 +492,10 @@
 							<span class="title">Team Name:</span>
 						</label>
 						<label>
-							<span class="input"><select name="teamname" id="teamname" onChange="return emplist();" style="width:100%; height:35px; border-radius:10px; -moz-border-radius:10px; border:none; " >
-							<option value="">Select</option>
-				
-					<option ></option>
-					</select></span>
+							<span class="input">
+							<select name="teamname" id="teamname" class="textbox" onChange="return emplist();" style="width:100%; height:35px; border-radius:10px; -moz-border-radius:10px; border:none; " >
+							<option>--Select--</option>
+							</select></span>
 						</label>
 						<label style="width:100%; min-height:50px; height:auto; margin-bottom:10px; float:left;">
 							<span class="title">Team Members:<input type="text" name="val" id="val" style="display:none;" class="textbox"  /></span>
@@ -193,7 +507,7 @@
 							<span class="title">Payment Type:</span>
 						</label>
 						<label>
-							<span class="input"><select name="payment_type" class="textbox" id="pay" onBlur="copyto();" style="width:100%; height:40px; border-radius:10px; -moz-border-radius:10px; border:none; ">
+							<span class="input"><select name="payment_type" id="payment_type" class="textbox" id="pay" onBlur="copyto();" style="width:100%; height:40px; border-radius:10px; -moz-border-radius:10px; border:none; ">
 							<option value="">Select</option>
 							<option value="cash">Cash</option>
 							<option value="credit">Credit</option>
@@ -208,7 +522,7 @@
 					<fieldset class="ui-corner-all" style="margin-top:0%;">
 					<p id="conformtotal" style="margin-top:0%;">Are you sure to submit the</p>
                                         <p id="conformtotalprice" style="background:#ff0000; font-size:28px; color:#ffffff;">PRICE</p>
-					<span style="float:left; width:100%;"><input type="submit" name="submit" value="Confirm"  style="width:80px; height:30px; padding-top:5px; font-size:14px; font-weight:bold; font-family:Arial, Helvetica, sans-serif; color:#ffffff; background: -moz-linear-gradient( left, #98c8a9, #e9e1a8 );
+					<span style="float:left; width:100%;"><input type="button" id="submit" name="submit" value="Confirm" onclick="return enterdata();" style=" cursor: pointer;width:80px; height:30px; padding-top:5px; font-size:14px; font-weight:bold; font-family:Arial, Helvetica, sans-serif; color:#ffffff; background: -moz-linear-gradient( left, #98c8a9, #e9e1a8 );
 			background: -webkit-linear-gradient( left, #98c8a9, #e9e1a8 );
 			background: -o-linear-gradient( left, #98c8a9, #e9e1a8 );
 			background: -khtml-linear-gradient( left, #98c8a9, #e9e1a8 );
@@ -218,16 +532,15 @@
 				<button id="next" style="margin-top:17%;">Next <span>&#9654;</span></button><button id="back" disabled="disabled" style="margin-top:17%;"><span>&#9664;</span> Back</button>
 			</form>
 		</div>
-		<script type="text/javascript" src="jqueryui1.8/development-bundle/jquery-1.7.2.js"></script>
-		<script type="text/javascript" src="jqueryui1.8/development-bundle/ui/jquery.ui.core.js"></script>
-		<script type="text/javascript" src="jqueryui1.8/development-bundle/ui/jquery-ui-1.8.20.custom.js"></script>
+		
 		<script type="text/javascript">
-			$(function() {
-				//caching stuff
-				$progress = $("#progress"), $amount = $("#amount"), panels = [], panels[0] = "panel1", panels[1] = "panel2", panels[3] = "thanks", i = 0, $formPanel = $(".form-panel");
+			jQuery.noConflict()(function() {
+				$progress = jQuery.noConflict()("#progress");
+				$amount = jQuery.noConflict()("#amount"), panels = [], panels[0] = "panel1", panels[1] = "panel2", panels[3] = "thanks", i = 0, $formPanel = jQuery.noConflict()(".form-panel");
 				//call progress bar constructor
 				$progress.progressbar({
 					change: function() {
+						
 						//update amount label when value changes
 						$amount.text($progress.progressbar("option", "value") + "%");
 					}
@@ -235,31 +548,32 @@
 				//same function to reuse code
 				function changepanel(n) {
 					//hide current item
-					$($formPanel[i]).fadeOut(500);
+					
+					jQuery.noConflict()($formPanel[i]).fadeOut(500);
 					//selects next item
 					i = i + n;
 					//hide next item
-					$($formPanel[i]).delay(505).fadeIn();
+					jQuery.noConflict()($formPanel[i]).delay(505).fadeIn();
 					
-					(i != 0) ? $("#back").attr("disabled", null) : $("#back").attr("disabled", "disabled");
-					(i != 3) ? $("#next").attr("disabled", null) : $("#next").attr("disabled", "disabled");
+					(i != 0) ? jQuery.noConflict()("#back").attr("disabled", null) : jQuery.noConflict()("#back").attr("disabled", "disabled");
+					(i != 3) ? jQuery.noConflict()("#next").attr("disabled", null) : jQuery.noConflict()("#next").attr("disabled", "disabled");
 	                                if(i ==2 ) {
-                                         n = $("input:checked").length ;
-                                         $('#conformtotalprice').html('hello'+n);
+                                         n = jQuery.noConflict()("input:checked").length ;
+                                         jQuery.noConflict()('#conformtotalprice').html('hello'+n);
 total=0;
-$("input:checkbox.pricetot:checked").each(function() {
-        total += parseInt($(this).attr('price'));
+jQuery.noConflict()("input:checkbox.pricetot:checked").each(function() {
+        total += parseInt(jQuery.noConflict()(this).attr('price'));
     });
 
- $('#conformtotalprice').html('Total Price-'+total);
+ jQuery.noConflict()('#conformtotalprice').html('Total Price-'+total);
                                           }
         			
 					$progress.progressbar("option", "value",Math.round(i * 33.33) );					
 				}
 				//set click handler for buttons
-				$(".ex-form button").click(function(e) {
+				jQuery.noConflict()(".ex-form button").click(function(e) {
 //alert(i);
-var n = ($(this).attr("id") != "back") ? 1 : -1;
+var n = (jQuery.noConflict()(this).attr("id") != "back") ? 1 : -1;
 				e.preventDefault();
 					
 					//next or back?
